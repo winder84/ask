@@ -1,0 +1,12 @@
+parameters:
+    # ... other parameters
+    security.acl.permission.map.class: Sonata\AdminBundle\Security\Acl\Permission\AdminPermissionMap
+
+services:
+    app.admin.product:
+        class: AppBundle\Admin\ProductAdmin
+        arguments: [~, AppBundle\Entity\Product, 'PixSortableBehaviorBundle:SortableAdmin']
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Контент, label: Оборудование}
+        calls:
+             - [ setPositionService, [@pix_sortable_behavior.position]]
