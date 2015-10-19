@@ -2,18 +2,16 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Product
+ * Category
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\ProductRepository")
+ * @ORM\Entity
  */
-class Product
+class Category
 {
     /**
      * @var integer
@@ -53,36 +51,27 @@ class Product
     private $isDelete = false;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="cost", type="float")
-     */
-    private $cost;
-
-    /**
      * @Gedmo\SortablePosition
      * @ORM\Column(name="position", type="integer")
      */
     private $position;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductHasMedia", mappedBy="product",cascade={"persist","remove"})
-     * @ORM\JoinTable(name="product_galleries")
+     * @var \Application\Sonata\MediaBundle\Entity\Media
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"}, fetch="LAZY")
      */
-    private $productMedia;
+    protected $media;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      **/
-    private $category;
+    private $categoryParent;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Mark", inversedBy="products")
-     * @ORM\JoinColumn(name="mark_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
      **/
-    private $mark;
+    private $products;
 
     public function __toString()
     {
@@ -97,13 +86,13 @@ class Product
      */
     public function __construct()
     {
-        $this->productMedia = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -114,7 +103,7 @@ class Product
      * Set title
      *
      * @param string $title
-     * @return Product
+     * @return Category
      */
     public function setTitle($title)
     {
@@ -126,7 +115,7 @@ class Product
     /**
      * Get title
      *
-     * @return string
+     * @return string 
      */
     public function getTitle()
     {
@@ -137,7 +126,7 @@ class Product
      * Set prevDescription
      *
      * @param string $prevDescription
-     * @return Product
+     * @return Category
      */
     public function setPrevDescription($prevDescription)
     {
@@ -149,7 +138,7 @@ class Product
     /**
      * Get prevDescription
      *
-     * @return string
+     * @return string 
      */
     public function getPrevDescription()
     {
@@ -160,7 +149,7 @@ class Product
      * Set description
      *
      * @param string $description
-     * @return Product
+     * @return Category
      */
     public function setDescription($description)
     {
@@ -172,7 +161,7 @@ class Product
     /**
      * Get description
      *
-     * @return string
+     * @return string 
      */
     public function getDescription()
     {
@@ -183,7 +172,7 @@ class Product
      * Set isDelete
      *
      * @param boolean $isDelete
-     * @return Product
+     * @return Category
      */
     public function setIsDelete($isDelete)
     {
@@ -195,7 +184,7 @@ class Product
     /**
      * Get isDelete
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getIsDelete()
     {
@@ -203,33 +192,10 @@ class Product
     }
 
     /**
-     * Set cost
-     *
-     * @param float $cost
-     * @return Product
-     */
-    public function setCost($cost)
-    {
-        $this->cost = $cost;
-
-        return $this;
-    }
-
-    /**
-     * Get cost
-     *
-     * @return float
-     */
-    public function getCost()
-    {
-        return $this->cost;
-    }
-
-    /**
      * Set position
      *
      * @param integer $position
-     * @return Product
+     * @return Category
      */
     public function setPosition($position)
     {
@@ -241,7 +207,7 @@ class Product
     /**
      * Get position
      *
-     * @return integer
+     * @return integer 
      */
     public function getPosition()
     {
@@ -249,97 +215,81 @@ class Product
     }
 
     /**
-     * Add productMedia
+     * Set media
      *
-     * @param \AppBundle\Entity\ProductHasMedia $productMedia
-     * @return Product
+     * @param \Application\Sonata\MediaBundle\Entity\Media $media
+     * @return Category
      */
-    public function addProductMedia(\AppBundle\Entity\ProductHasMedia $productMedia)
+    public function setMedia(\Application\Sonata\MediaBundle\Entity\Media $media = null)
     {
-        $this->productMedia[] = $productMedia;
+        $this->media = $media;
 
         return $this;
     }
 
     /**
-     * Remove productMedia
+     * Get media
      *
-     * @param \AppBundle\Entity\ProductHasMedia $productMedia
+     * @return \Application\Sonata\MediaBundle\Entity\Media 
      */
-    public function removeProductMedia(\AppBundle\Entity\ProductHasMedia $productMedia)
+    public function getMedia()
     {
-        $this->productMedia->removeElement($productMedia);
+        return $this->media;
     }
 
     /**
-     * Get productMedia
+     * Set categoryParent
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param \AppBundle\Entity\Category $categoryParent
+     * @return Category
      */
-    public function getProductMedia()
+    public function setCategoryParent(\AppBundle\Entity\Category $categoryParent = null)
     {
-        return $this->productMedia;
-    }
-
-    /**
-     * Set productMedia
-     *
-     * @param array
-     * @return Product
-     */
-    public function setProductMedia($media)
-    {
-        $this->productMedia = new ArrayCollection();
-        foreach ($media as $m) {
-            $m->setProduct($this);
-            $this->addProductMedia($m);
-        }
-        return $this;
-    }
-
-    /**
-     * Set category
-     *
-     * @param \AppBundle\Entity\Category $category
-     * @return Product
-     */
-    public function setCategory(\AppBundle\Entity\Category $category = null)
-    {
-        $this->category = $category;
+        $this->categoryParent = $categoryParent;
 
         return $this;
     }
 
     /**
-     * Get category
+     * Get categoryParent
      *
-     * @return \AppBundle\Entity\Category
+     * @return \AppBundle\Entity\Category 
      */
-    public function getCategory()
+    public function getCategoryParent()
     {
-        return $this->category;
+        return $this->categoryParent;
     }
 
     /**
-     * Set mark
+     * Add products
      *
-     * @param \AppBundle\Entity\Mark $mark
-     * @return Product
+     * @param \AppBundle\Entity\Product $products
+     * @return Category
      */
-    public function setMark(\AppBundle\Entity\Mark $mark = null)
+    public function addProduct(\AppBundle\Entity\Product $products)
     {
-        $this->mark = $mark;
+        $this->products[] = $products;
 
         return $this;
     }
 
     /**
-     * Get mark
+     * Remove products
      *
-     * @return \AppBundle\Entity\Mark 
+     * @param \AppBundle\Entity\Product $products
      */
-    public function getMark()
+    public function removeProduct(\AppBundle\Entity\Product $products)
     {
-        return $this->mark;
+        $this->products->removeElement($products);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

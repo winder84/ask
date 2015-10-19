@@ -2,15 +2,15 @@
 
 namespace AppBundle\Admin;
 
-use Pix\SortableBehaviorBundle\Services\PositionHandler;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Pix\SortableBehaviorBundle\Services\PositionHandler;
 
-class ProductAdmin extends Admin
+class CategoryAdmin extends Admin
 {
     protected $context = 'default';
     public $last_position = 0;
@@ -43,7 +43,6 @@ class ProductAdmin extends Admin
             ->add('id')
             ->add('title')
             ->add('isDelete')
-            ->add('cost')
         ;
     }
 
@@ -56,9 +55,7 @@ class ProductAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('title')
-            ->add('category', null)
-            ->add('mark', null)
-            ->add('cost')
+            ->add('categoryParent', 'sonata_type_model_list', array('required' => false))
             ->add('isDelete')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -79,26 +76,17 @@ class ProductAdmin extends Admin
     {
         $formMapper
             ->add('isDelete')
-            ->add('title', null)
-            ->add('category', null)
-            ->add('mark', null)
-            ->add('prevDescription', null)
+            ->add('title')
+            ->add('prevDescription')
             ->add('description', 'ckeditor')
-            ->add('cost')
-            ->add('productMedia', 'sonata_type_collection', array(
-                'cascade_validation' => true,
-                'type_options' => array('delete' => false),
+            ->add('categoryParent', 'sonata_type_model_list', array('required' => false))
+            ->add('media', 'sonata_type_model_list', array(
                 'required' => false,
+                'label' => 'Изображение'
             ), array(
-                'edit' => 'inline',
-                'required' => false,
-                'inline' => 'table',
-                'sortable' => 'position',
-                'targetEntity' => 'AppBundle\Entity\ProductHasMedia',
                 'link_parameters' => array(
                     'context' => $this->context,
-                ),
-                'admin_code' => 'app.admin.product_has_media'
+                )
             ))
         ;
     }
@@ -113,16 +101,7 @@ class ProductAdmin extends Admin
             ->add('title')
             ->add('prevDescription')
             ->add('description')
-            ->add('cost')
+            ->add('isDelete')
         ;
-    }
-
-    public function prePersist($product)
-    {
-        $product->setProductMedia($product->getProductMedia());
-    }
-    public function preUpdate($product)
-    {
-        $product->setProductMedia($product->getProductMedia());
     }
 }

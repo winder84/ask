@@ -15,4 +15,20 @@ services:
         class: AppBundle\Admin\ProductHasMediaAdmin
         arguments: [~, AppBundle\Entity\ProductHasMedia, AppBundle:ProductHasMediaAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: Контент, label: Изображения оборудования}
+            - {name: sonata.admin, manager_type: orm, group: Контент, label: Изображения оборудования, show_in_dashboard: false}
+
+    app.admin.category:
+        class: AppBundle\Admin\CategoryAdmin
+        arguments: [~, AppBundle\Entity\Category, 'PixSortableBehaviorBundle:SortableAdmin']
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Контент, label: Категории}
+        calls:
+             - [ setPositionService, [@pix_sortable_behavior.position]]
+
+    app.admin.mark:
+        class: AppBundle\Admin\MarkAdmin
+        arguments: [~, AppBundle\Entity\Mark, 'PixSortableBehaviorBundle:SortableAdmin']
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Контент, label: Бренды}
+        calls:
+             - [ setPositionService, [@pix_sortable_behavior.position]]

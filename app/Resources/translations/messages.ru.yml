@@ -1,0 +1,17 @@
+Title : Наименование
+Prev Description : Краткое описание
+Description : Описание
+Cost : Цена
+Product Media: Галлерея
+Product List: Список оборудования
+Is Delete: Удалено
+Action: Действия
+move_to_bottom: Переместить в конец
+move_down: Переместить ниже
+move_up: Переместить выше
+move_to_top: Переместить в начало
+Category Parent: Родительская категория
+Country: Страна
+Category: Категория
+Mark: Бренд
+breadcrumb.link_dashboard: <i class="fa fa-home"></i>
