@@ -42,6 +42,7 @@ class ProductHasMediaAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $link_parameters = array();
         $formMapper
             ->add('media', 'sonata_type_model_list', array('required' => false), array(
                 'link_parameters' => $link_parameters

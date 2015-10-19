@@ -91,9 +91,11 @@ class ProductAdmin extends Admin
                 'required' => false,
                 'inline' => 'table',
                 'sortable' => 'position',
+                'targetEntity' => 'AppBundle\Entity\ProductHasMedia',
                 'link_parameters' => array(
                     'context' => $this->context,
                 ),
+                'admin_code' => 'app.admin.product_has_media'
             ))
         ;
     }
