@@ -46,9 +46,9 @@ class Category
     /**
      * @var boolean
      *
-     * @ORM\Column(name="isDelete", type="boolean", nullable=true, options={"default" = false})
+     * @ORM\Column(name="enabled", type="boolean", nullable=true, options={"default" = true})
      */
-    private $isDelete = false;
+    private $enabled = true;
 
     /**
      * @Gedmo\SortablePosition
@@ -169,29 +169,6 @@ class Category
     }
 
     /**
-     * Set isDelete
-     *
-     * @param boolean $isDelete
-     * @return Category
-     */
-    public function setIsDelete($isDelete)
-    {
-        $this->isDelete = $isDelete;
-
-        return $this;
-    }
-
-    /**
-     * Get isDelete
-     *
-     * @return boolean 
-     */
-    public function getIsDelete()
-    {
-        return $this->isDelete;
-    }
-
-    /**
      * Set position
      *
      * @param integer $position
@@ -291,5 +268,28 @@ class Category
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Category
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

@@ -42,7 +42,7 @@ class ProductAdmin extends Admin
         $datagridMapper
             ->add('id')
             ->add('title')
-            ->add('isDelete')
+            ->add('enabled')
             ->add('cost')
         ;
     }
@@ -59,7 +59,7 @@ class ProductAdmin extends Admin
             ->add('category', null)
             ->add('mark', null)
             ->add('cost')
-            ->add('isDelete')
+            ->add('enabled')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => array(),
@@ -78,7 +78,7 @@ class ProductAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('isDelete')
+            ->add('enabled')
             ->add('title', null)
             ->add('category', null)
             ->add('mark', null)

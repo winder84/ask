@@ -53,9 +53,9 @@ class Mark
     /**
      * @var boolean
      *
-     * @ORM\Column(name="isDelete", type="boolean", nullable=true, options={"default" = false})
+     * @ORM\Column(name="enabled", type="boolean", nullable=true, options={"default" = true})
      */
-    private $isDelete = false;
+    private $enabled = true;
 
     /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
@@ -187,28 +187,6 @@ class Mark
     }
 
     /**
-     * Set isDelete
-     *
-     * @param boolean $isDelete
-     * @return Mark
-     */
-    public function setIsDelete($isDelete)
-    {
-        $this->isDelete = $isDelete;
-
-        return $this;
-    }
-
-    /**
-     * Get isDelete
-     *
-     * @return boolean 
-     */
-    public function getIsDelete()
-    {
-        return $this->isDelete;
-    }
-    /**
      * Constructor
      */
     public function __construct()
@@ -293,5 +271,28 @@ class Mark
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Mark
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

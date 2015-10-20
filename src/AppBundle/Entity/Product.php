@@ -48,9 +48,9 @@ class Product
     /**
      * @var boolean
      *
-     * @ORM\Column(name="isDelete", type="boolean", nullable=true, options={"default" = false})
+     * @ORM\Column(name="enabled", type="boolean", nullable=true, options={"default" = true})
      */
-    private $isDelete = false;
+    private $enabled = true;
 
     /**
      * @var float
@@ -177,29 +177,6 @@ class Product
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set isDelete
-     *
-     * @param boolean $isDelete
-     * @return Product
-     */
-    public function setIsDelete($isDelete)
-    {
-        $this->isDelete = $isDelete;
-
-        return $this;
-    }
-
-    /**
-     * Get isDelete
-     *
-     * @return boolean
-     */
-    public function getIsDelete()
-    {
-        return $this->isDelete;
     }
 
     /**
@@ -341,5 +318,28 @@ class Product
     public function getMark()
     {
         return $this->mark;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Product
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

@@ -44,7 +44,7 @@ class MarkAdmin extends Admin
             ->add('id')
             ->add('title')
             ->add('country')
-            ->add('isDelete')
+            ->add('enabled')
         ;
     }
 
@@ -58,7 +58,7 @@ class MarkAdmin extends Admin
             ->add('id')
             ->add('title')
             ->add('country')
-            ->add('isDelete')
+            ->add('enabled')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => array(),
@@ -77,7 +77,7 @@ class MarkAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('isDelete')
+            ->add('enabled')
             ->add('title')
             ->add('country', null, array('required' => false))
             ->add('prevDescription')
@@ -104,7 +104,7 @@ class MarkAdmin extends Admin
             ->add('country')
             ->add('prevDescription')
             ->add('description')
-            ->add('isDelete')
+            ->add('enabled')
         ;
     }
 }

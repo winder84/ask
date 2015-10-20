@@ -42,7 +42,7 @@ class CategoryAdmin extends Admin
         $datagridMapper
             ->add('id')
             ->add('title')
-            ->add('isDelete')
+            ->add('enabled')
         ;
     }
 
@@ -56,7 +56,7 @@ class CategoryAdmin extends Admin
             ->add('id')
             ->add('title')
             ->add('categoryParent', 'sonata_type_model_list', array('required' => false))
-            ->add('isDelete')
+            ->add('enabled')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'edit' => array(),
@@ -75,7 +75,7 @@ class CategoryAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('isDelete')
+            ->add('enabled')
             ->add('title')
             ->add('prevDescription')
             ->add('description', 'ckeditor')
@@ -101,7 +101,7 @@ class CategoryAdmin extends Admin
             ->add('title')
             ->add('prevDescription')
             ->add('description')
-            ->add('isDelete')
+            ->add('enabled')
         ;
     }
 }
